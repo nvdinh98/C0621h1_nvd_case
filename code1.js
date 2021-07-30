@@ -1,7 +1,7 @@
 let Product = new Array();
 let Price = new Array();
 let Description = new Array();
-Product.push("Iphone 15 ");
+Product.push("Iphone 15");
 Product.push("Samsung j15");
 Product.push("Nokia E69");
 Price.push("30.000.000 ");
@@ -12,31 +12,90 @@ Description.push("Sang trọng")
 Description.push("Hàng siêu bền")
 
 //=== show sản phẩm
+// function showProduct() {
+//     let textTable = "";
+//     textTable = "<table >";
+//     //====================Tạo tiêu đề bảng ===============================
+//     textTable += "<tr>";
+//     textTable += "<th border-spacing: 5px>" + "Product" + "</th>";
+//     textTable += "<th border-spacing: 5px>" + "Price" + "</th>";
+//     textTable += "<th border-spacing: 5px>" + "Description" + "</th>";
+//     textTable += "<th border-spacing: 5px>" + Product.length + "_" + "Product" + "</th>";
+//     textTable += "</tr>";
+//     //====================Tạo row(hàng) show Product ===============================
+//     for (let i = 0; i < Product.length; i++) {
+//         textTable += "<tr>";
+//         textTable += "<td>" + Product[i] + "</td>";
+//         textTable += "<td>" + Price[i] + "</td>";
+//         textTable += "<td>" + Description[i] + "</td>";
+//         textTable += "<td>" + "<button onclick='checkProduct(this.value)' value=" + i + ">Edit</button>" + "<button onclick='deleteProduct(this.value)' value=" + i + ">Delete</button>" + "</td>";
+//         textTable += "</td>";
+//         textTable += "</tr>";
+//     }
+//     //====================Tạo tiêu đề bảng ===============================
+//     textTable += "</table>";
+//     document.getElementById("Result").innerHTML = textTable;
+// }
+
+// Minh viết lại cái bảng này luôn theo cách của Minh
 function showProduct() {
-    let textTable = "";
-    textTable = "<table >";
+    const table = document.createElement("table");
+    const tableHeadings = document.createElement("tr");
     //====================Tạo tiêu đề bảng ===============================
-    textTable += "<tr>";
-    textTable += "<th border-spacing: 5px>" + "Product" + "</th>";
-    textTable += "<th border-spacing: 5px>" + "Price" + "</th>";
-    textTable += "<th border-spacing: 5px>" + "Description" + "</th>";
-    textTable += "<th border-spacing: 5px>" + Product.length + "_" + "Product" + "</th>";
-    textTable += "</tr>";
+    for (const headingContent of ["Product", "Price", "Description", "Image", `${Product.length}_Product`]) {
+        const productHeading = document.createElement("th");
+        const productText = document.createTextNode(headingContent);
+        productHeading.appendChild(productText);
+        productHeading.style.borderSpacing = "5px";
+        tableHeadings.appendChild(productHeading);
+    }
+    table.appendChild(tableHeadings);
+
     //====================Tạo row(hàng) show Product ===============================
     for (let i = 0; i < Product.length; i++) {
-        textTable += "<tr>";
-        textTable += "<td>" + Product[i] + "</td>";
-        textTable += "<td>" + Price[i] + "</td>";
-        textTable += "<td>" + Description[i] + "</td>";
-        textTable += "<td>" + "<button onclick='checkProduct(this.value)' value=" + i + ">Edit</button>" + "<button onclick='deleteProduct(this.value)' value=" + i + ">Delete</button>" + "</td>";
-        textTable += "</td>";
-        textTable += "</tr>";
+        const row = document.createElement("tr");
+        const productCol = document.createElement("td");
+        productCol.innerHTML = Product[i];
+        
+        const priceCol = document.createElement("td");
+        priceCol.innerHTML = Price[i];
+
+        const descriptionCol = document.createElement("td");
+        descriptionCol.innerHTML = Description[i];
+
+        const imageCol = document.createElement("td");
+        const image = document.createElement("img");
+        image.src = `images/${Product[i]}.jpg`;
+        image.width = 50;
+        imageCol.appendChild(image);
+
+        row.appendChild(productCol);
+        row.appendChild(priceCol);
+        row.appendChild(descriptionCol);
+        row.appendChild(imageCol);
+
+        const buttonCol = document.createElement("td");
+        const editButton = document.createElement("button");
+        editButton.innerHTML = "Edit";
+        editButton.onclick = function () {
+            checkProduct(i)
+        };
+
+        const deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "Delete";
+        editButton.onclick = function () {
+            deleteProduct(i)
+        };
+        buttonCol.appendChild(editButton);
+        buttonCol.appendChild(deleteButton);
+
+        row.appendChild(buttonCol);
+        
+        table.appendChild(row);
     }
     //====================Tạo tiêu đề bảng ===============================
-    textTable += "</table>";
-    document.getElementById("Result").innerHTML = textTable;
+    document.getElementById("Result").appendChild(table);
 }
-
 showProduct()
 
 function deleteProduct(id) {
