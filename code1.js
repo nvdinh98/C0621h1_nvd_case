@@ -63,17 +63,20 @@ function showProduct() {
         const descriptionCol = document.createElement("td");
         descriptionCol.innerHTML = Description[i];
 
+        // Cột ảnh
         const imageCol = document.createElement("td");
         const image = document.createElement("img");
         image.src = `images/${Product[i]}.jpg`;
         image.width = 50;
         imageCol.appendChild(image);
 
+        // Append columns to row
         row.appendChild(productCol);
         row.appendChild(priceCol);
         row.appendChild(descriptionCol);
         row.appendChild(imageCol);
 
+        // Button column
         const buttonCol = document.createElement("td");
         const editButton = document.createElement("button");
         editButton.innerHTML = "Edit";
