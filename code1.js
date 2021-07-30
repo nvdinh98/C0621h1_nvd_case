@@ -39,6 +39,8 @@ Description.push("Hàng siêu bền")
 
 // Minh viết lại cái bảng này luôn theo cách của Minh
 function showProduct() {
+    const container = document.getElementById("Result");
+    const existingTable = container.childNodes[0];
     const table = document.createElement("table");
     const tableHeadings = document.createElement("tr");
     //====================Tạo tiêu đề bảng ===============================
@@ -86,7 +88,7 @@ function showProduct() {
 
         const deleteButton = document.createElement("button");
         deleteButton.innerHTML = "Delete";
-        editButton.onclick = function () {
+        deleteButton.onclick = function () {
             deleteProduct(i)
         };
         buttonCol.appendChild(editButton);
@@ -97,7 +99,11 @@ function showProduct() {
         table.appendChild(row);
     }
     //====================Tạo tiêu đề bảng ===============================
-    document.getElementById("Result").appendChild(table);
+    if (existingTable) {
+        container.replaceChild(table, existingTable);
+    } else {
+        container.appendChild(table);
+    }
 }
 showProduct()
 
